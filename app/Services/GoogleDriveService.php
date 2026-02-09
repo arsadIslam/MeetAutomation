@@ -24,4 +24,25 @@ class GoogleDriveService
             'fields' => 'files(id, name, mimeType, size, createdTime)'
         ]);
     }
+    public function downloadFile($fileId, $fileName)
+    {
+        $response = $this->service->files->get($fileId, [
+            'alt' => 'media'
+        ]);
+
+        $content = $response->getBody()->getContents();
+
+        $tempDirectory = storage_path('app/temp');
+
+        if (!file_exists($tempDirectory)) {
+            mkdir($tempDirectory, 0755, true);
+        }
+
+        $filePath = $tempDirectory . '/' . $fileName;
+
+        file_put_contents($filePath, $content);
+
+        return $filePath;
+    }
+
 }
