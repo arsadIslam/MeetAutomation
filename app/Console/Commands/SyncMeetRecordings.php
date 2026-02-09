@@ -48,12 +48,20 @@ class SyncMeetRecordings extends Command
                         : null,
                 ]
             );
+            if (!$record->processed) {
+                $localPath = $drive->downloadFile(...);
+                $this->info('Downloading: ' . $file->name);
+    
+                $localPath = $drive->downloadFile($file->id, $file->name);
+    
+                $this->info('Saved at: ' . $localPath);
 
-            $this->info('Downloading: ' . $file->name);
+                $record->update([
+                    'processed' => true
+                ]);
+            }
 
-            $localPath = $drive->downloadFile($file->id, $file->name);
 
-            $this->info('Saved at: ' . $localPath);
         }
     }
 
