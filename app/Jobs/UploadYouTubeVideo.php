@@ -64,7 +64,7 @@ class UploadYouTubeVideo implements ShouldQueue
         $snippet->setCategoryId("22");
 
         $status = new VideoStatus();
-        $status->setPrivacyStatus("private");
+        $status->setPrivacyStatus("public");
 
         $video = new Video();
         $video->setSnippet($snippet);
@@ -126,7 +126,9 @@ class UploadYouTubeVideo implements ShouldQueue
                         'video_id' => $statusUpload['id']
                     ]);
                 } else {
+                    Log::error("Upload did not finalize properly.");
                     throw new Exception("Upload did not finalize properly.");
+                    
                 }
             }
 

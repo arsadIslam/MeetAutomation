@@ -20,7 +20,7 @@ class GoogleDriveService
     public function listMeetRecordings()
     {
         return $this->service->files->listFiles([
-            'q' => "name contains 'Meet' and mimeType != 'application/vnd.google-apps.folder'",
+            'q' => "mimeType != 'application/vnd.google-apps.folder'",
             'fields' => 'files(id, name, mimeType, size, createdTime)'
         ]);
     }
@@ -38,11 +38,15 @@ class GoogleDriveService
             mkdir($tempDirectory, 0755, true);
         }
 
-        $filePath = $tempDirectory . '/' . $fileName;
+        $filePath = $tempDirectory . '/' . $fileName . '.mp4';
 
         file_put_contents($filePath, $content);
+        // $videoPath = storage_path($filePath);
+
+        \App\Jobs\UploadYouTubeVideo::dispatch($filePath);
 
         return $filePath;
+
     }
 
 }

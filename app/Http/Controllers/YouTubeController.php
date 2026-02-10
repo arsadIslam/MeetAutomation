@@ -40,14 +40,14 @@ class YouTubeController extends Controller
         return "YouTube connected successfully 🔥";
     }
 
-    public function upload()
-    {
-        $videoPath = storage_path('app/temp/Meeting tes33.mp4');
+    // public function upload()
+    // {
+    //     $videoPath = storage_path('app/temp/eej-wnce-jyq (2026-02-10 06:49 GMT).mp4');
 
-        \App\Jobs\UploadYouTubeVideo::dispatch($videoPath);
+    //     \App\Jobs\UploadYouTubeVideo::dispatch($videoPath);
 
-        return "Upload job dispatched 🚀";
-    }
+    //     return "Upload job dispatched 🚀";
+    // }
 
 
 }
